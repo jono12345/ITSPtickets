@@ -8,9 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once 'config/database.php';
-require_once 'app/Auth/ApiKeyAuth.php';
-
-use App\Auth\ApiKeyAuth;
+require_once 'api-key-functions.php';
 
 try {
     $config = require 'config/database.php';
@@ -29,7 +27,8 @@ try {
         die("Access denied. User not found or inactive.");
     }
     
-    $apiKeyAuth = new ApiKeyAuth($pdo);
+    // Ensure API tokens table exists
+    ensureApiTokensTable($pdo);
     $message = '';
     $messageType = '';
     $generatedToken = null;
@@ -52,9 +51,10 @@ try {
                             $expiresAt = date('Y-m-d H:i:s', strtotime("+{$expires_days} days"));
                         }
                         
-                        $tokenData = $apiKeyAuth->generateToken(
-                            $user['id'], 
-                            $name, 
+                        $tokenData = generateApiToken(
+                            $pdo,
+                            $user['id'],
+                            $name,
                             ['*'], // Full access for now
                             $expiresAt
                         );
@@ -73,7 +73,7 @@ try {
                 case 'revoke':
                     $token = $_POST['token'] ?? '';
                     
-                    if ($apiKeyAuth->revokeToken($token)) {
+                    if (revokeApiToken($pdo, $token)) {
                         $message = 'API key revoked successfully.';
                         $messageType = 'success';
                     } else {
@@ -86,7 +86,7 @@ try {
     }
     
     // Get all user's tokens
-    $tokens = $apiKeyAuth->getUserTokens($user['id']);
+    $tokens = getUserApiTokens($pdo, $user['id']);
     
 } catch (Exception $e) {
     die("Database error: " . $e->getMessage());

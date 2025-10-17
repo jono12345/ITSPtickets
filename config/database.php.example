@@ -1,31 +1,19 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Simple Model Database Configuration Template
+|--------------------------------------------------------------------------
+| Copy this file to database.php and update with your actual credentials.
+| Direct database configuration for Simple Model architecture.
+*/
 
 return [
-    'default' => 'mysql',
-    
-    'connections' => [
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => '127.0.0.1',
-            'port' => '3306',
-            'database' => 'ITSPtickets',
-            'username' => 'your_username',
-            'password' => 'your_password',
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'strict' => true,
-            'engine' => null,
-        ],
-    ],
-    
-    // For the simplified version, we'll use these direct values
     'driver' => 'mysql',
-    'host' => '127.0.0.1',
-    'port' => '3306',
-    'database' => 'ITSPtickets',
-    'username' => 'your_username',
-    'password' => 'your_password',
+    'host' => '127.0.0.1',          // Your database host
+    'port' => '3306',               // Your database port
+    'database' => 'ITSPtickets',    // Your database name
+    'username' => 'your_username',  // Your database username
+    'password' => 'your_password',  // Your database password
     'charset' => 'utf8mb4',
     'options' => [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

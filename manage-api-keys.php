@@ -15,9 +15,7 @@
 */
 
 require_once 'config/database.php';
-require_once 'app/Auth/ApiKeyAuth.php';
-
-use App\Auth\ApiKeyAuth;
+require_once 'api-key-functions.php';
 
 try {
     $config = require 'config/database.php';
@@ -27,22 +25,23 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
     
-    $apiKeyAuth = new ApiKeyAuth($pdo);
+    // Ensure API tokens table exists
+    ensureApiTokensTable($pdo);
     
     // Parse command line arguments
     $command = $argv[1] ?? 'help';
     
     switch ($command) {
         case 'create':
-            createApiKey($apiKeyAuth, $pdo, $argv);
+            createApiKey($pdo, $argv);
             break;
             
         case 'list':
-            listApiKeys($apiKeyAuth, $pdo, $argv);
+            listApiKeys($pdo, $argv);
             break;
             
         case 'revoke':
-            revokeApiKey($apiKeyAuth, $argv);
+            revokeApiKey($pdo, $argv);
             break;
             
         case 'show':
@@ -64,7 +63,7 @@ try {
     exit(1);
 }
 
-function createApiKey($apiKeyAuth, $pdo, $argv)
+function createApiKey($pdo, $argv)
 {
     $userId = $argv[2] ?? null;
     $name = $argv[3] ?? null;
@@ -103,7 +102,7 @@ function createApiKey($apiKeyAuth, $pdo, $argv)
     }
     
     // Create token
-    $result = $apiKeyAuth->generateToken($userId, $name, $abilities, $expiresAt);
+    $result = generateApiToken($pdo, $userId, $name, $abilities, $expiresAt);
     
     if ($result) {
         echo "✅ API Key created successfully!\n\n";
@@ -125,7 +124,7 @@ function createApiKey($apiKeyAuth, $pdo, $argv)
     }
 }
 
-function listApiKeys($apiKeyAuth, $pdo, $argv)
+function listApiKeys($pdo, $argv)
 {
     $userId = $argv[2] ?? null;
     
@@ -140,7 +139,7 @@ function listApiKeys($apiKeyAuth, $pdo, $argv)
             exit(1);
         }
         
-        $tokens = $apiKeyAuth->getUserTokens($userId);
+        $tokens = getUserApiTokens($pdo, $userId);
         
         echo "API Keys for {$user['name']} ({$user['email']}):\n";
         echo str_repeat("=", 50) . "\n\n";
@@ -188,7 +187,7 @@ function listApiKeys($apiKeyAuth, $pdo, $argv)
     }
 }
 
-function revokeApiKey($apiKeyAuth, $argv)
+function revokeApiKey($pdo, $argv)
 {
     $token = $argv[2] ?? null;
     
@@ -202,7 +201,7 @@ function revokeApiKey($apiKeyAuth, $argv)
         exit(1);
     }
     
-    $result = $apiKeyAuth->revokeToken($token);
+    $result = revokeApiToken($pdo, $token);
     
     if ($result) {
         echo "✅ API key revoked successfully!\n";
