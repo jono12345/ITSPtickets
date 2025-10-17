@@ -2,7 +2,7 @@
 
 Essential API testing tools for the ITSPtickets REST API.
 
-**Download Postman Collection:** http://172.208.49.21/ITSPtickets/api/postman_collection.json
+**Download Postman Collection:** http://your-server.com/ITSPtickets/api/postman_collection.json
 
 ---
 
@@ -69,7 +69,7 @@ php manage-api-keys.php create USER_ID "Test Key" "*" 90
 
 ## 📖 Documentation
 
-**Full API Documentation:** http://172.208.49.21/ITSPtickets/api-docs.php
+**Full API Documentation:** http://your-server.com/ITSPtickets/api-docs.php
 (Requires staff login)
 
 **Key Endpoints:**
@@ -81,7 +81,7 @@ php manage-api-keys.php create USER_ID "Test Key" "*" 90
 **Authentication:**
 ```bash
 curl -H "Authorization: Bearer YOUR_API_KEY" \
-  http://172.208.49.21/ITSPtickets/api/tickets.php
+  http://your-server.com/ITSPtickets/api/tickets.php
 ```
 
 ---

@@ -1,10 +1,10 @@
 # Database configuration (contains credentials)
 config/database.php
+**/database.php
 
 # Environment files
-.env
-.env.local
-.env.production
+.env*
+!.env.example
 
 # Temporary files
 *.tmp

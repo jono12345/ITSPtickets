@@ -101,6 +101,6 @@ INSERT IGNORE INTO ticket_categories (name, description, sort_order) VALUES
 ('Software', 'General software support', 90),
 ('Windows', 'Windows operating system support', 100);
 
--- Insert sample organization
+-- Insert sample organization (EXAMPLE DATA ONLY - Replace with your actual data)
 INSERT IGNORE INTO organizations (name, code, description, contact_email, monthly_hours_allowance) VALUES
-('CBM Limited', 'CBM', 'Construction and Building Management company', 'admin@cbm-ltd.com', 36.0);
+('Example Corp', 'DEMO', 'Sample organization for demonstration purposes only', 'demo@example.com', 40.0);

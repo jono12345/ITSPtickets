@@ -325,6 +325,13 @@ INSERT INTO sla_policies (name, type, priority, response_target, resolution_targ
 ('Request - Normal', 'request', 'normal', 480, 5760, 1),
 ('Job - Normal', 'job', 'normal', 480, 2880, 1);
 
--- Create default admin user (password: admin123)
-INSERT INTO users (name, email, password, role) VALUES 
-('System Admin', 'admin@itsptickets.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
+-- ⚠️  DEFAULT ADMIN USER - CHANGE PASSWORD IMMEDIATELY! ⚠️
+-- Default login: admin@admin.local / Password: admin
+-- This is for DEVELOPMENT/TESTING only - NEVER use in production!
+INSERT INTO users (name, email, password, role) VALUES
+('System Admin', 'admin@admin.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
+
+-- SECURITY WARNING: After setup, immediately:
+-- 1. Change the admin password: UPDATE users SET password = PASSWORD('new-secure-password') WHERE email = 'admin@admin.local';
+-- 2. Or create your own admin and delete this one
+-- 3. NEVER use this default account in production environments
