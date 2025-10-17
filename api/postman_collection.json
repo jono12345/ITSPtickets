@@ -1,0 +1,831 @@
+{
+  "info": {
+    "name": "ITSPtickets API Collection",
+    "description": "Complete API collection for ITSPtickets system - includes all endpoints for ticket management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://168.62.52.225/ITSPtickets",
+      "type": "string"
+    },
+    {
+      "key": "ticket_id",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Connectivity Tests",
+      "item": [
+        {
+          "name": "API Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-test.php",
+              "host": ["{{base_url}}"],
+              "path": ["api-test.php"]
+            },
+            "description": "Simple connectivity test endpoint"
+          }
+        },
+        {
+          "name": "API Test Simple",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-test-simple.php",
+              "host": ["{{base_url}}"],
+              "path": ["api-test-simple.php"]
+            },
+            "description": "Simple API test with sample data"
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Authentication",
+      "item": [
+        {
+          "name": "Login - Staff",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "your_email@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "your_password",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/login.php",
+              "host": ["{{base_url}}"],
+              "path": ["login.php"]
+            },
+            "description": "Login to get session cookie"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - List Tickets",
+      "item": [
+        {
+          "name": "List All Tickets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"]
+            },
+            "description": "Get all tickets with default pagination"
+          }
+        },
+        {
+          "name": "List Tickets - Paginated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?page=1&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Get tickets with custom pagination"
+          }
+        },
+        {
+          "name": "List Tickets - Max Limit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?limit=100",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100"
+                }
+              ]
+            },
+            "description": "Get tickets with maximum allowed limit (100)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Filter by Status",
+      "item": [
+        {
+          "name": "Filter - New Tickets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=new",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "new"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter - In Progress",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=in_progress",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "in_progress"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter - Waiting",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=waiting",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "waiting"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter - Resolved",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=resolved",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "resolved"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter - Closed",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=closed",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "closed"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Filter by Priority",
+      "item": [
+        {
+          "name": "Filter - Low Priority",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?priority=low",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "priority",
+                  "value": "low"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter - Normal Priority",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?priority=normal",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "priority",
+                  "value": "normal"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter - High Priority",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?priority=high",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "priority",
+                  "value": "high"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter - Urgent Priority",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?priority=urgent",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "priority",
+                  "value": "urgent"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Filter by Assignee",
+      "item": [
+        {
+          "name": "Filter - By Assignee ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?assignee_id=2",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "assignee_id",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Combined Filters",
+      "item": [
+        {
+          "name": "Status + Priority",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=in_progress&priority=high",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "in_progress"
+                },
+                {
+                  "key": "priority",
+                  "value": "high"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Status + Priority + Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=new&priority=urgent&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "new"
+                },
+                {
+                  "key": "priority",
+                  "value": "urgent"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "All Filters Combined",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=in_progress&priority=high&assignee_id=2&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "in_progress"
+                },
+                {
+                  "key": "priority",
+                  "value": "high"
+                },
+                {
+                  "key": "assignee_id",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - Get Specific Ticket",
+      "item": [
+        {
+          "name": "Get Ticket by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id={{ticket_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{ticket_id}}"
+                }
+              ]
+            },
+            "description": "Get detailed information about a specific ticket"
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 - Create Tickets",
+      "item": [
+        {
+          "name": "Create Incident - Urgent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Server is down\",\n  \"description\": \"Production server appears to be unreachable. Multiple users reporting inability to access the application.\",\n  \"type\": \"incident\",\n  \"priority\": \"urgent\",\n  \"requester_email\": \"admin@company.com\",\n  \"requester_name\": \"System Administrator\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"]
+            }
+          }
+        },
+        {
+          "name": "Create Request - Normal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"New user account request\",\n  \"description\": \"Please create a new user account for John Doe in the sales department with standard permissions.\",\n  \"type\": \"request\",\n  \"priority\": \"normal\",\n  \"requester_email\": \"hr@company.com\",\n  \"requester_name\": \"HR Manager\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"]
+            }
+          }
+        },
+        {
+          "name": "Create Job - Low",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Scheduled database maintenance\",\n  \"description\": \"Monthly database backup and optimization scheduled for next weekend during maintenance window.\",\n  \"type\": \"job\",\n  \"priority\": \"low\",\n  \"requester_email\": \"sysadmin@company.com\",\n  \"requester_name\": \"Database Administrator\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"]
+            }
+          }
+        },
+        {
+          "name": "Create with Assignee & Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Email configuration issue\",\n  \"description\": \"User unable to send emails from Outlook client. Receiving error: Connection timed out.\",\n  \"type\": \"incident\",\n  \"priority\": \"high\",\n  \"requester_email\": \"user@company.com\",\n  \"requester_name\": \"Jane Smith\",\n  \"assignee_id\": 2,\n  \"category_id\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 - Update Tickets",
+      "item": [
+        {
+          "name": "Update Status - In Progress",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_progress\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id={{ticket_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{ticket_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Status - Resolved",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"resolved\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id={{ticket_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{ticket_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Priority",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"priority\": \"urgent\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id={{ticket_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{ticket_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assign to User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assignee_id\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id={{ticket_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{ticket_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Multiple Fields",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_progress\",\n  \"priority\": \"high\",\n  \"assignee_id\": 3\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id={{ticket_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{ticket_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Subject & Description",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Updated ticket subject\",\n  \"description\": \"Updated detailed description with more information about the issue.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id={{ticket_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{ticket_id}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "11 - Alternative Endpoint",
+      "item": [
+        {
+          "name": "List via api-tickets.php",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api-tickets.php"]
+            },
+            "description": "Alternative endpoint with same functionality"
+          }
+        },
+        {
+          "name": "List with Filters via api-tickets.php",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-tickets.php?status=in_progress&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api-tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "in_progress"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "12 - Error Handling",
+      "item": [
+        {
+          "name": "Invalid Ticket ID (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?id=999999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "999999"
+                }
+              ]
+            },
+            "description": "Test error handling for non-existent ticket"
+          }
+        },
+        {
+          "name": "Invalid Status Filter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php?status=invalid_status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "invalid_status"
+                }
+              ]
+            },
+            "description": "Test invalid status value"
+          }
+        },
+        {
+          "name": "Missing Required Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Missing required subject field\",\n  \"type\": \"incident\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"]
+            },
+            "description": "Test validation for missing required fields"
+          }
+        },
+        {
+          "name": "Unauthorized Access",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tickets.php",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets.php"]
+            },
+            "description": "Test access without authentication cookie"
+          }
+        }
+      ]
+    }
+  ]
+}
+

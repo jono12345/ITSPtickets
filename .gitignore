@@ -1,0 +1,71 @@
+# Database configuration (contains credentials)
+config/database.php
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Temporary files
+*.tmp
+*.log
+cookies.txt
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.backup
+*.bak
+*~
+
+# Cache and session files
+cache/
+sessions/
+temp/
+
+# User uploads (if any)
+uploads/
+attachments/
+
+# Database dumps
+*.sql.gz
+*.sql.zip
+database_backup_*
+
+# API keys and sensitive data
+api-keys.txt
+secrets.txt
+
+# Test output files
+test-results/
+coverage/
+
+# Server-specific files
+.htpasswd
+ssl/
+certificates/
+
+# Vendor directories (if composer is used)
+vendor/
+
+# Node modules (if any frontend build tools)
+node_modules/
+npm-debug.log*
+
+# PHP-specific
+composer.phar
+composer.lock
+phpunit.phar
+
+# Development tools
+.phpunit.cache/
+.phpstan.cache/
+.php-cs-fixer.cache
