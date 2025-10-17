@@ -1,32 +1,17 @@
 <?php
-session_start();
+/*
+|--------------------------------------------------------------------------
+| Reports & Analytics - Simple Model
+|--------------------------------------------------------------------------
+| Comprehensive reporting system with charts and metrics
+*/
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /ITSPtickets/login.php');
-    exit;
-}
-
-require_once 'config/database.php';
+require_once 'auth-helper.php';
+require_once 'db-connection.php';
 
 try {
-    $config = require 'config/database.php';
-    $dsn = "mysql:host={$config['host']};dbname={$config['database']};charset=utf8mb4";
-    $pdo = new PDO($dsn, $config['username'], $config['password'], [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-    
-    // Get current user
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $user = $stmt->fetch();
-    
-    if (!$user) {
-        session_destroy();
-        header('Location: /ITSPtickets/login.php');
-        exit;
-    }
+    $pdo = createDatabaseConnection();
+    $user = getCurrentStaff($pdo);
     
     // Check if user has reporting permissions (agents can only see their own data)
     $canViewAll = in_array($user['role'], ['admin', 'supervisor']);

@@ -1,33 +1,18 @@
 <?php
-session_start();
+/*
+|--------------------------------------------------------------------------
+| SLA Management - Simple Model
+|--------------------------------------------------------------------------
+| Service Level Agreement management (Admin/Supervisor)
+*/
 
-// Check if user is logged in and has admin privileges
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /ITSPtickets/login.php');
-    exit;
-}
-
-require_once 'config/database.php';
+require_once 'auth-helper.php';
+require_once 'db-connection.php';
 require_once 'sla-service-simple.php';
 
 try {
-    $config = require 'config/database.php';
-    $dsn = "mysql:host={$config['host']};dbname={$config['database']};charset=utf8mb4";
-    $pdo = new PDO($dsn, $config['username'], $config['password'], [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-    
-    // Get current user
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $user = $stmt->fetch();
-    
-    if (!$user || !in_array($user['role'], ['admin', 'supervisor'])) {
-        $_SESSION['error'] = 'Access denied. Admin privileges required.';
-        header('Location: /ITSPtickets/');
-        exit;
-    }
+    $pdo = createDatabaseConnection();
+    $user = getCurrentSupervisor($pdo);
     
     // Initialize SLA service
     $slaService = new SlaServiceSimple($pdo);

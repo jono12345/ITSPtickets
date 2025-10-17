@@ -1,44 +1,23 @@
 <?php
-session_start();
+/*
+|--------------------------------------------------------------------------
+| Create Ticket - Simple Model
+|--------------------------------------------------------------------------
+| Ticket creation interface for staff members
+*/
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /ITSPtickets/login.php');
-    exit;
-}
-
-require_once 'config/database.php';
+require_once 'auth-helper.php';
+require_once 'db-connection.php';
 require_once 'sla-service-simple.php';
 require_once 'notification-service-simple.php';
 
 try {
-    $config = require 'config/database.php';
-    $dsn = "mysql:host={$config['host']};dbname={$config['database']};charset=utf8mb4";
-    $pdo = new PDO($dsn, $config['username'], $config['password'], [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
+    $pdo = createDatabaseConnection();
+    $user = getCurrentStaff($pdo);
     
     // Initialize services
     $slaService = new SlaServiceSimple($pdo);
     $notificationService = new NotificationServiceSimple($pdo);
-    
-    // Get current user
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $user = $stmt->fetch();
-    
-    if (!$user) {
-        session_destroy();
-        header('Location: /ITSPtickets/login.php');
-        exit;
-    }
-    
-    // Redirect requesters to portal (they shouldn't create tickets through internal interface)
-    if ($user['role'] === 'requester') {
-        header('Location: /ITSPtickets/');
-        exit;
-    }
     
     // Handle form submission
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
