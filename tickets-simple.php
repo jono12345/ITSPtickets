@@ -1,37 +1,21 @@
 <?php
-session_start();
+/*
+|--------------------------------------------------------------------------
+| Tickets List - Simple Model
+|--------------------------------------------------------------------------
+| Main ticket listing with filtering, sorting, and SLA tracking
+*/
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /ITSPtickets/login.php');
-    exit;
-}
-
-// Get user info
-require_once 'config/database.php';
+require_once 'auth-helper.php';
+require_once 'db-connection.php';
 require_once 'sla-service-simple.php';
 
 try {
-    $config = require 'config/database.php';
-    $dsn = "mysql:host={$config['host']};dbname={$config['database']};charset=utf8mb4";
-    $pdo = new PDO($dsn, $config['username'], $config['password'], [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
+    $pdo = createDatabaseConnection();
+    $user = getCurrentStaff($pdo);
     
     // Initialize SLA service
     $slaService = new SlaServiceSimple($pdo);
-    
-    // Get current user
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $user = $stmt->fetch();
-    
-    if (!$user) {
-        session_destroy();
-        header('Location: /ITSPtickets/login.php');
-        exit;
-    }
     
     // Get filter parameters
     $assigneeFilter = $_GET['assignee'] ?? '';
